@@ -3,4 +3,5 @@
     <string name="StartTracking">Start Tracking Location</string>
     <string name="EndTracking">Stop Tracking Location</string>
     <string name="ApplicationName">XamarinLocationTracking</string>
+    <string name="AppLogId">LocTrack</string>
 </resources>
