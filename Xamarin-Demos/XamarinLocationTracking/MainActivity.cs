@@ -67,8 +67,8 @@ namespace XamarinLocationTracking
         public void OnMapReady(GoogleMap googleMap)
         {
             trackingMap = googleMap;
-            Log.Debug("LocationTrackingApp", "MapFragment ready");
-            trackingMap.MoveCamera(CameraUpdateFactory.NewLatLng(new Android.Gms.Maps.Model.LatLng(0.0, 0.0)));
+            trackingMap.UiSettings.MyLocationButtonEnabled = true;
+            trackingMap.MyLocationEnabled = true;
         }
     }
 }
