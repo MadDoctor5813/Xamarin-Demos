@@ -54,12 +54,14 @@ namespace XamarinLocationTracking
 
         private void OnStartTracking()
         {
-            throw new NotImplementedException();
+            Log.Debug(GetString(Resource.String.AppLogId), "Starting Tracking");
+            trackingToggleButton.Text = GetString(Resource.String.EndTracking);
         }
 
         private void OnEndTracking()
         {
-            throw new NotImplementedException();
+            Log.Debug(GetString(Resource.String.AppLogId), "Ending Tracking");
+            trackingToggleButton.Text = GetString(Resource.String.StartTracking);
         }
 
         public void OnMapReady(GoogleMap googleMap)
