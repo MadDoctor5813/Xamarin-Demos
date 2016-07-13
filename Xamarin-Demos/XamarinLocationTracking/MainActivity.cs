@@ -5,13 +5,20 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Android.Gms.Maps;
+using Android.Support.V4.App;
+using Android.Util;
 
 namespace XamarinLocationTracking
 {
     [Activity(Label = "XamarinLocationTracking", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MainActivity : Activity
+    public class MainActivity : Activity, IOnMapReadyCallback
     {
-        int count = 1;
+        MapFragment mapFragment;
+        Button trackingToggleButton;
+        GoogleMap trackingMap;
+
+        bool isTracking = false;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -20,11 +27,46 @@ namespace XamarinLocationTracking
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
-            // Get our button from the layout resource,
-            // and attach an event to it
-            Button button = FindViewById<Button>(Resource.Id.MyButton);
+            //build the map fragment
+            mapFragment = MapFragment.NewInstance();
+            Android.App.FragmentTransaction tx = FragmentManager.BeginTransaction();
+            tx.Add(Resource.Id.RootLayout, mapFragment);
+            tx.Commit();
 
-            button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
+            //grab the layout elements
+            trackingToggleButton = FindViewById<Button>(Resource.Id.TrackingButton);
+            trackingToggleButton.Click += OnToggleTracking;
+            mapFragment.GetMapAsync(this);
+        }
+
+        private void OnToggleTracking(object sender, EventArgs e)
+        {
+            isTracking = !isTracking;
+            if (isTracking)
+            {
+                OnStartTracking();
+            }
+            else
+            {
+                OnEndTracking();
+            }
+        }
+
+        private void OnStartTracking()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OnEndTracking()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnMapReady(GoogleMap googleMap)
+        {
+            trackingMap = googleMap;
+            Log.Debug("LocationTrackingApp", "MapFragment ready");
+            trackingMap.MoveCamera(CameraUpdateFactory.NewLatLng(new Android.Gms.Maps.Model.LatLng(0.0, 0.0)));
         }
     }
 }
