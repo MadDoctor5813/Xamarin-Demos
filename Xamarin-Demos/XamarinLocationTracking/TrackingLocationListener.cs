@@ -70,7 +70,7 @@ namespace XamarinLocationTracking
             if (Locations.Count == 0 || (Locations.Last().Latitude != location.Latitude || Locations.Last().Longitude != location.Longitude))
             {
                 Locations.Add(location);
-                //tell the main activity to update the map
+                mainActivity.DrawLocations(Locations);
             }
         }
 

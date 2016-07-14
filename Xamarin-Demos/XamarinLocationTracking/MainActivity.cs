@@ -8,6 +8,10 @@ using Android.OS;
 using Android.Gms.Maps;
 using Android.Support.V4.App;
 using Android.Util;
+using Android.Locations;
+using System.Collections.Generic;
+using Android.Gms.Maps.Model;
+using Android.Graphics;
 
 namespace XamarinLocationTracking
 {
@@ -43,6 +47,22 @@ namespace XamarinLocationTracking
             trackingToggleButton = FindViewById<Button>(Resource.Id.TrackingButton);
             trackingToggleButton.Click += OnToggleTracking;
             mapFragment.GetMapAsync(this);
+        }
+
+        public void DrawLocations(List<Location> locations)
+        {
+            PolylineOptions opts = new PolylineOptions();
+            var latLngBuilder = new LatLngBounds.Builder();
+            foreach (Location loc in locations)
+            {
+                opts.Add(new LatLng(loc.Latitude, loc.Longitude));
+                latLngBuilder.Include(new LatLng(loc.Latitude, loc.Longitude));
+            }
+            opts.InvokeColor(Color.Red);
+            trackingMap.AddPolyline(opts);
+            trackingMap.MoveCamera(CameraUpdateFactory.NewLatLngBounds(latLngBuilder.Build(), 50));
+            
+
         }
 
         private void OnToggleTracking(object sender, EventArgs e)
