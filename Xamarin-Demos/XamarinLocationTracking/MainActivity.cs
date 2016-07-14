@@ -18,6 +18,8 @@ namespace XamarinLocationTracking
         Button trackingToggleButton;
         GoogleMap trackingMap;
 
+        TrackingLocationListener trackingLocationListener;
+
         bool isTracking = false;
 
         protected override void OnCreate(Bundle bundle)
@@ -33,6 +35,8 @@ namespace XamarinLocationTracking
             tx.Add(Resource.Id.RootLayout, mapFragment);
             tx.Commit();
 
+            trackingLocationListener = new TrackingLocationListener(base.ApplicationContext);
+        }
             //grab the layout elements
             trackingToggleButton = FindViewById<Button>(Resource.Id.TrackingButton);
             trackingToggleButton.Click += OnToggleTracking;
