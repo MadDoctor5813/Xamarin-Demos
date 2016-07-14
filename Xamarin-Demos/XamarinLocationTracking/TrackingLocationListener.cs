@@ -9,39 +9,64 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Android.Locations;
 using Android.Util;
+using Android.Gms.Common.Apis;
+using Android.Gms.Location;
+using Android.Locations;
+using Android.Gms.Common;
 
 namespace XamarinLocationTracking
 {
-    class TrackingLocationListener : Java.Lang.Object, ILocationListener
+    class TrackingLocationListener : Java.Lang.Object, Android.Gms.Location.ILocationListener
     {
 
         private Context context;
+        private GoogleApiClient googleApiClient;
+        private LocationRequest locationRequest;
 
         public TrackingLocationListener(Context context)
         {
             this.context = context;
+            googleApiClient = new GoogleApiClient.Builder(context)
+                .AddApi(LocationServices.API)
+                .AddConnectionCallbacks(OnConnection)
+                .AddOnConnectionFailedListener(OnConnectionFailed)
+                .Build();
+            googleApiClient.Connect();
+            locationRequest = new LocationRequest()
+                .SetInterval(2000)
+                .SetPriority(LocationRequest.PriorityHighAccuracy);
+        }
+
+        public void OnConnection()
+        {
+            Log.Debug(context.Resources.GetString(Resource.String.AppLogId), "Google API connected.");
+            LocationServices.FusedLocationApi.RequestLocationUpdates(googleApiClient, locationRequest, this);
+        }
+
+        public void OnConnectionFailed(ConnectionResult result)
+        {
+            Log.Debug(context.Resources.GetString(Resource.String.AppLogId), "Google API connection failed. Error code: " + result.ErrorCode);
         }
 
         public void OnLocationChanged(Location location)
         {
-            
+            Log.Debug(context.Resources.GetString(Resource.String.AppLogId), String.Format("Lat: {0} Lng {1}", location.Latitude, location.Longitude));
         }
 
         public void OnProviderDisabled(string provider)
         {
-            throw new NotImplementedException();
+            Log.Debug(context.Resources.GetString(Resource.String.AppLogId), "LocListener provider disabled.");
         }
 
         public void OnProviderEnabled(string provider)
         {
-            throw new NotImplementedException();
+            Log.Debug(context.Resources.GetString(Resource.String.AppLogId), "LocListener provider enabled.");
         }
 
         public void OnStatusChanged(string provider, [GeneratedEnum] Availability status, Bundle extras)
         {
-            //Log.Debug(Resource.GetString(Resource.String.AppLogId), )
+            Log.Debug(context.Resources.GetString(Resource.String.AppLogId), "LocListener status changed.");
         }
     }
 }
