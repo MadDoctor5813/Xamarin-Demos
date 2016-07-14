@@ -57,10 +57,11 @@ namespace XamarinLocationTracking
             {
                 opts.Add(new LatLng(loc.Latitude, loc.Longitude));
                 latLngBuilder.Include(new LatLng(loc.Latitude, loc.Longitude));
+                trackingMap.AddMarker(new MarkerOptions().SetPosition(new LatLng(loc.Latitude, loc.Longitude)));
             }
             opts.InvokeColor(Color.Red);
             trackingMap.AddPolyline(opts);
-            trackingMap.MoveCamera(CameraUpdateFactory.NewLatLngBounds(latLngBuilder.Build(), 50));
+            trackingMap.MoveCamera(CameraUpdateFactory.NewLatLngBounds(latLngBuilder.Build(), 200));
             
 
         }
