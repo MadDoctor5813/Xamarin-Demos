@@ -19,7 +19,7 @@ namespace XamarinLocationTracking
     public class MainActivity : Activity, IOnMapReadyCallback
     {
         MapFragment mapFragment;
-        Button trackingToggleButton;
+        ToggleButton trackingToggleButton;
         GoogleMap trackingMap;
 
         TrackingLocationListener trackingLocationListener;
@@ -44,8 +44,8 @@ namespace XamarinLocationTracking
         {
             base.OnStart();
             //grab the layout elements
-            trackingToggleButton = FindViewById<Button>(Resource.Id.TrackingButton);
-            trackingToggleButton.Click += OnToggleTracking;
+            trackingToggleButton = FindViewById<ToggleButton>(Resource.Id.TrackingButton);
+            trackingToggleButton.CheckedChange += OnToggleTracking;
             mapFragment.GetMapAsync(this);
         }
 
@@ -65,10 +65,10 @@ namespace XamarinLocationTracking
 
         }
 
-        private void OnToggleTracking(object sender, EventArgs e)
+        private void OnToggleTracking(object sender, CompoundButton.CheckedChangeEventArgs e)
         {
-            trackingLocationListener.IsTracking = !trackingLocationListener.IsTracking;
-            if (trackingLocationListener.IsTracking)
+            trackingLocationListener.IsTracking = e.IsChecked;
+            if (e.IsChecked)
             {
                 OnStartTracking();
             }
@@ -81,13 +81,11 @@ namespace XamarinLocationTracking
         private void OnStartTracking()
         {
             Log.Debug(GetString(Resource.String.AppLogId), "Starting Tracking");
-            trackingToggleButton.Text = GetString(Resource.String.EndTracking);
         }
 
         private void OnEndTracking()
         {
             Log.Debug(GetString(Resource.String.AppLogId), "Ending Tracking");
-            trackingToggleButton.Text = GetString(Resource.String.StartTracking);
         }
 
         public void OnMapReady(GoogleMap googleMap)

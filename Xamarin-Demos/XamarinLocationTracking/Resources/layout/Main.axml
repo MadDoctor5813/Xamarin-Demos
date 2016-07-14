@@ -3,10 +3,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/RootLayout">
-    <Button
-        android:id="@+id/TrackingButton"
+    android:id="@+id/RootLayout"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <ToggleButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/StartTracking" />
+        android:id="@+id/TrackingButton"
+        android:textOff="@+string/TrackingOff"
+        android:textOn="@+string/TrackingOn" />
 </LinearLayout>
