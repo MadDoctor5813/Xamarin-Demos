@@ -37,6 +37,10 @@ namespace XamarinLocationTracking
 
             trackingLocationListener = new TrackingLocationListener(base.ApplicationContext);
         }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
             //grab the layout elements
             trackingToggleButton = FindViewById<Button>(Resource.Id.TrackingButton);
             trackingToggleButton.Click += OnToggleTracking;
