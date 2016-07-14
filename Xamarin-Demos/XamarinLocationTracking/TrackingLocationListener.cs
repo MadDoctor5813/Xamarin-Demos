@@ -24,6 +24,16 @@ namespace XamarinLocationTracking
         private GoogleApiClient googleApiClient;
         private LocationRequest locationRequest;
 
+        public List<Location> Locations
+        {
+            get
+            {
+                return locations;
+            }
+        }
+
+        List<Location> locations;
+
         public bool IsTracking { get; set; }
 
         public TrackingLocationListener(Context context)
@@ -38,6 +48,7 @@ namespace XamarinLocationTracking
             locationRequest = new LocationRequest()
                 .SetInterval(2000)
                 .SetPriority(LocationRequest.PriorityHighAccuracy);
+            locations = new List<Location>();
         }
 
         public void OnConnection()
@@ -54,6 +65,10 @@ namespace XamarinLocationTracking
         public void OnLocationChanged(Location location)
         {
             Log.Debug(context.Resources.GetString(Resource.String.AppLogId), String.Format("Lat: {0} Lng {1}", location.Latitude, location.Longitude));
+            if (Locations.Count == 0 || (Locations.Last().Latitude != location.Latitude || Locations.Last().Longitude != location.Longitude))
+            {
+                Locations.Add(location);
+            }
         }
 
         public void OnProviderDisabled(string provider)
