@@ -23,6 +23,7 @@ namespace XamarinLocationTracking
         private Context context;
         private GoogleApiClient googleApiClient;
         private LocationRequest locationRequest;
+        private MainActivity mainActivity;
 
         public List<Location> Locations
         {
@@ -36,9 +37,10 @@ namespace XamarinLocationTracking
 
         public bool IsTracking { get; set; }
 
-        public TrackingLocationListener(Context context)
+        public TrackingLocationListener(MainActivity activity)
         {
-            this.context = context;
+            this.mainActivity = activity;
+            context = mainActivity.ApplicationContext;
             googleApiClient = new GoogleApiClient.Builder(context)
                 .AddApi(LocationServices.API)
                 .AddConnectionCallbacks(OnConnection)
@@ -68,6 +70,7 @@ namespace XamarinLocationTracking
             if (Locations.Count == 0 || (Locations.Last().Latitude != location.Latitude || Locations.Last().Longitude != location.Longitude))
             {
                 Locations.Add(location);
+                //tell the main activity to update the map
             }
         }
 

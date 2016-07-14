@@ -33,7 +33,7 @@ namespace XamarinLocationTracking
             tx.Add(Resource.Id.RootLayout, mapFragment);
             tx.Commit();
 
-            trackingLocationListener = new TrackingLocationListener(base.ApplicationContext);
+            trackingLocationListener = new TrackingLocationListener(this);
         }
 
         protected override void OnStart()
