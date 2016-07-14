@@ -20,8 +20,6 @@ namespace XamarinLocationTracking
 
         TrackingLocationListener trackingLocationListener;
 
-        bool isTracking = false;
-
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -49,8 +47,8 @@ namespace XamarinLocationTracking
 
         private void OnToggleTracking(object sender, EventArgs e)
         {
-            isTracking = !isTracking;
-            if (isTracking)
+            trackingLocationListener.IsTracking = !trackingLocationListener.IsTracking;
+            if (trackingLocationListener.IsTracking)
             {
                 OnStartTracking();
             }

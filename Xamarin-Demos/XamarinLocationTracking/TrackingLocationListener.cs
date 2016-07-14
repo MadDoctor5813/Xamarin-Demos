@@ -24,6 +24,8 @@ namespace XamarinLocationTracking
         private GoogleApiClient googleApiClient;
         private LocationRequest locationRequest;
 
+        public bool IsTracking { get; set; }
+
         public TrackingLocationListener(Context context)
         {
             this.context = context;
