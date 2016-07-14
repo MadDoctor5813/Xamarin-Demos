@@ -78,11 +78,14 @@ namespace XamarinLocationTracking
 
         public void OnLocationChanged(Location location)
         {
-            Log.Debug(context.Resources.GetString(Resource.String.AppLogId), String.Format("Lat: {0} Lng {1}", location.Latitude, location.Longitude));
-            if (Locations.Count == 0 || (Locations.Last().Latitude != location.Latitude || Locations.Last().Longitude != location.Longitude))
+            if (IsTracking)
             {
-                Locations.Add(location);
-                mainActivity.DrawLocations(Locations);
+                Log.Debug(context.Resources.GetString(Resource.String.AppLogId), String.Format("Lat: {0} Lng {1}", location.Latitude, location.Longitude));
+                if (Locations.Count == 0 || (Locations.Last().Latitude != location.Latitude || Locations.Last().Longitude != location.Longitude))
+                {
+                    Locations.Add(location);
+                    mainActivity.DrawLocations(Locations);
+                }
             }
         }
 
