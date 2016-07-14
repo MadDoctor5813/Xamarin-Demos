@@ -71,22 +71,12 @@ namespace XamarinLocationTracking
             trackingLocationListener.IsTracking = e.IsChecked;
             if (e.IsChecked)
             {
-                OnStartTracking();
+                trackingLocationListener.OnStartTracking();
             }
             else
             {
-                OnEndTracking();
+                trackingLocationListener.OnEndTracking();
             }
-        }
-
-        private void OnStartTracking()
-        {
-            Log.Debug(GetString(Resource.String.AppLogId), "Starting Tracking");
-        }
-
-        private void OnEndTracking()
-        {
-            Log.Debug(GetString(Resource.String.AppLogId), "Ending Tracking");
         }
 
         public void OnMapReady(GoogleMap googleMap)

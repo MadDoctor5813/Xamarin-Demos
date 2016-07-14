@@ -53,6 +53,18 @@ namespace XamarinLocationTracking
             locations = new List<Location>();
         }
 
+        public void OnStartTracking()
+        {
+            Log.Debug(context.Resources.GetString(Resource.String.AppLogId), "Starting Tracking");
+            //clear the location list
+            Locations.Clear();
+        }
+
+        public void OnEndTracking()
+        {
+            Log.Debug(context.Resources.GetString(Resource.String.AppLogId), "Ending Tracking");
+        }
+
         public void OnConnection()
         {
             Log.Debug(context.Resources.GetString(Resource.String.AppLogId), "Google API connected.");
