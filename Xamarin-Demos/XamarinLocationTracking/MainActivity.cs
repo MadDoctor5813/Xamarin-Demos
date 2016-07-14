@@ -49,6 +49,11 @@ namespace XamarinLocationTracking
             mapFragment.GetMapAsync(this);
         }
 
+        public void ClearMarkersAndPolyline()
+        {
+            trackingMap.Clear();
+        }
+
         public void DrawLocations(List<Location> locations)
         {
             PolylineOptions opts = new PolylineOptions();

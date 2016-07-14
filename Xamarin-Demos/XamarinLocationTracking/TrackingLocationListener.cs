@@ -58,6 +58,8 @@ namespace XamarinLocationTracking
             Log.Debug(context.Resources.GetString(Resource.String.AppLogId), "Starting Tracking");
             //clear the location list
             Locations.Clear();
+            //clear the map
+            mainActivity.ClearMarkersAndPolyline();
         }
 
         public void OnEndTracking()
