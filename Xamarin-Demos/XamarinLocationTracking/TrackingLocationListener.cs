@@ -19,7 +19,7 @@ namespace XamarinLocationTracking
 {
     class TrackingLocationListener : Java.Lang.Object, Android.Gms.Location.ILocationListener
     {
-
+        private const int MIN_LOC_DELTA = 15;
         private Context context;
         private GoogleApiClient googleApiClient;
         private LocationRequest locationRequest;
@@ -83,7 +83,7 @@ namespace XamarinLocationTracking
             if (IsTracking)
             {
                 Log.Debug(context.Resources.GetString(Resource.String.AppLogId), String.Format("Lat: {0} Lng {1}", location.Latitude, location.Longitude));
-                if (Locations.Count == 0 || (Locations.Last().Latitude != location.Latitude || Locations.Last().Longitude != location.Longitude))
+                if (Locations.Count == 0 || !IsDuplicateLocation(location, Locations.Last()))
                 {
                     Locations.Add(location);
                     mainActivity.DrawLocations(Locations);
@@ -104,6 +104,12 @@ namespace XamarinLocationTracking
         public void OnStatusChanged(string provider, [GeneratedEnum] Availability status, Bundle extras)
         {
             Log.Debug(context.Resources.GetString(Resource.String.AppLogId), "LocListener status changed.");
+        }
+
+        private bool IsDuplicateLocation(Location first, Location second)
+        {
+            Log.Debug(context.GetString(Resource.String.AppLogId), first.DistanceTo(second).ToString());
+            return first.DistanceTo(second) < MIN_LOC_DELTA;
         }
     }
 }
